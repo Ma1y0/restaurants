@@ -1,0 +1,18 @@
+import express from "express"
+import cors from "cors"
+import * as dotenv from "dotenv"
+import { debugLogger } from "./middleware/debug"
+import { userRouter } from "./routes/userRouter"
+
+dotenv.config()
+const app = express()
+
+// Middleware
+app.use(cors())
+app.use(express.json())
+app.use(debugLogger)
+
+// Router
+app.use("/user", userRouter)
+
+app.listen(8080, () => console.log("App is listenig on http://localhost:8080"))
