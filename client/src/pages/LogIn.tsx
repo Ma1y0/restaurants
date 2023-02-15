@@ -1,4 +1,11 @@
-import { useState, useContext } from "react"
+import {
+	useState,
+	useContext,
+	FormEvent,
+	FormEventHandler,
+	ChangeEventHandler,
+	ChangeEvent,
+} from "react"
 import axios from "../lib/axios"
 import { toast } from "react-toastify"
 import { UserContext } from "../lib/UserContext"
@@ -6,13 +13,12 @@ import { UserContext } from "../lib/UserContext"
 const LogIn = () => {
 	const { user, setUser } = useContext(UserContext)
 
-	const [errorMsg, setErrorMsg] = useState("")
 	const [formData, setFormData] = useState({
 		email: "",
 		password: "",
 	})
 
-	const onChange = (e: Event) => {
+	const onChange: ChangeEventHandler<HTMLInputElement> = (e: ChangeEvent<HTMLInputElement>) => {
 		const target = e.target as HTMLInputElement
 		setFormData((prevState) => ({
 			...prevState,
@@ -20,7 +26,7 @@ const LogIn = () => {
 		}))
 	}
 
-	const onSubmit = async (e: Event) => {
+	const onSubmit: FormEventHandler<HTMLFormElement> = async (e: FormEvent<HTMLFormElement>) => {
 		e.preventDefault()
 
 		try {
@@ -35,22 +41,18 @@ const LogIn = () => {
 					withCredentials: true,
 				}
 			)
-			toast.info("Good")
 
 			const token = response?.data.token
 
-			setUser({ email: formData.email[0], token })
+			setUser({ email: formData.email[0], name: response.data.data.name, token })
 		} catch (error) {
-			console.error(error)
+			toast.error(`${error}`)
 		}
 	}
 
 	return (
 		<main>
-			<form
-				className="flex flex-col items-center gap-1 m-6"
-				onSubmit={onSubmit}
-			>
+			<form className="flex flex-col items-center gap-1 m-6" onSubmit={onSubmit}>
 				<input
 					className="sm:w-full md:w-[80%] lg:w-[20%] w-[40%] rounded p-2"
 					type="email"

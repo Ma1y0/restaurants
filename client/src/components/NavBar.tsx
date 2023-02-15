@@ -1,24 +1,32 @@
 import { Link } from "react-router-dom"
+import { useContext } from "react"
+import { UserContext } from "../lib/UserContext"
 
 const NavBar = () => {
+	const { user } = useContext(UserContext)
+
 	return (
 		<div className="w-full p-6">
 			<div className="flex justify-between items-center">
 				<h1>
 					<Link to="/">Restaurants</Link>
 				</h1>
-				<div className="justify-end">
-					<Link to="/login">
-						<button className="bg-blue-500 hover:bg-blue-700 text-white py-2 px-4 rounded mr-3">
-							Log In
-						</button>
-					</Link>
-					<Link to="/register">
-						<button className="bg-blue-500 hover:bg-blue-700 text-white py-2 px-4 rounded">
-							Register
-						</button>
-					</Link>
-				</div>
+				{user ? (
+					<p>Hello {user.name}</p>
+				) : (
+					<div className="justify-end">
+						<Link to="/login">
+							<button className="bg-blue-500 hover:bg-blue-700 text-white py-2 px-4 rounded mr-3">
+								Log In
+							</button>
+						</Link>
+						<Link to="/register">
+							<button className="bg-blue-500 hover:bg-blue-700 text-white py-2 px-4 rounded">
+								Register
+							</button>
+						</Link>
+					</div>
+				)}
 			</div>
 		</div>
 	)
