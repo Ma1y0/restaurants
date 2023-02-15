@@ -8,30 +8,31 @@ datasource db {
 }
 
 model User {
-  id        String      @id
-  name      String
-  reviews   Review[]
-  email String @unique
-  password String
+  id           String   @unique @default(cuid())
+  name         String
+  reviews      Review[]
+  email        String   @unique
+  password     String
+  refreshToken String?
 
   restaurants Restaurant[] @relation("UserToRestaurant")
 }
 
 model Restaurant {
-  id      String     @id
+  id      String   @unique @default(cuid())
   name    String
   reviews Review[]
 
-  user    User     @relation("UserToRestaurant", fields: [userId], references: [id])
-  userId  String
+  user   User   @relation("UserToRestaurant", fields: [userId], references: [id])
+  userId String
 }
 
 model Review {
-  id           String     @id
+  id           String     @unique @default(cuid())
   rating       Int
   text         String?
-  user         User    @relation(fields: [userId], references: [id])
+  user         User       @relation(fields: [userId], references: [id])
   userId       String
-  restaurant   Restaurant  @relation(fields: [restaurantId], references: [id])
+  restaurant   Restaurant @relation(fields: [restaurantId], references: [id])
   restaurantId String
 }
