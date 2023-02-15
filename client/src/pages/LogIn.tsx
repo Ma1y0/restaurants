@@ -1,7 +1,12 @@
-import { useState } from "react"
+import { useState, useContext } from "react"
 import axios from "../lib/axios"
+import { toast } from "react-toastify"
+import { UserContext } from "../lib/UserContext"
 
 const LogIn = () => {
+	const { user, setUser } = useContext(UserContext)
+
+	const [errorMsg, setErrorMsg] = useState("")
 	const [formData, setFormData] = useState({
 		email: "",
 		password: "",
@@ -15,9 +20,37 @@ const LogIn = () => {
 		}))
 	}
 
+	const onSubmit = async (e: Event) => {
+		e.preventDefault()
+
+		try {
+			const response = await axios.post(
+				"/user/login",
+				JSON.stringify({
+					email: formData.email[0],
+					password: formData.password[0],
+				}),
+				{
+					headers: { "Content-Type": "application/json" },
+					withCredentials: true,
+				}
+			)
+			toast.info("Good")
+
+			const token = response?.data.token
+
+			setUser({ email: formData.email[0], token })
+		} catch (error) {
+			console.error(error)
+		}
+	}
+
 	return (
 		<main>
-			<form className="flex flex-col items-center gap-1 m-6">
+			<form
+				className="flex flex-col items-center gap-1 m-6"
+				onSubmit={onSubmit}
+			>
 				<input
 					className="sm:w-full md:w-[80%] lg:w-[20%] w-[40%] rounded p-2"
 					type="email"
@@ -25,6 +58,7 @@ const LogIn = () => {
 					value={formData.email}
 					placeholder="Email"
 					onChange={onChange}
+					required
 				/>
 				<input
 					className="sm:w-full md:w-[80%] lg:w-[20%] w-[40%] rounded p-2"
@@ -33,10 +67,9 @@ const LogIn = () => {
 					value={formData.password}
 					placeholder="Password"
 					onChange={onChange}
+					required
 				/>
-				<button type="submit" onClick={(e: Event) => e.preventDefault()}>
-					Log In
-				</button>
+				<button type="submit">Log In</button>
 			</form>
 		</main>
 	)

@@ -1,7 +1,7 @@
 const Register = () => {
 	return (
 		<main>
-			<h1>Refister</h1>
+			<h1>Register</h1>
 		</main>
 	)
 }
