@@ -23,7 +23,7 @@ model Restaurant {
   name    String
   reviews Review[]
 
-  user   User   @relation("UserToRestaurant", fields: [userId], references: [id])
+  owner  User   @relation("UserToRestaurant", fields: [userId], references: [id])
   userId String
 }
 

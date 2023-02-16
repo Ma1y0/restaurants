@@ -54,7 +54,7 @@ const LogIn = () => {
 		<main>
 			<form className="flex flex-col items-center gap-1 m-6" onSubmit={onSubmit}>
 				<input
-					className="sm:w-full md:w-[80%] lg:w-[20%] w-[40%] rounded p-2"
+					className="sm:w-full md:w-[80%] lg:w-[25%] w-[40%] rounded p-2"
 					type="email"
 					name="email"
 					value={formData.email}
@@ -63,7 +63,7 @@ const LogIn = () => {
 					required
 				/>
 				<input
-					className="sm:w-full md:w-[80%] lg:w-[20%] w-[40%] rounded p-2"
+					className="sm:w-full md:w-[80%] lg:w-[25%] w-[40%] rounded p-2"
 					type="password"
 					name="password"
 					value={formData.password}

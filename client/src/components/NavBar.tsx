@@ -1,9 +1,9 @@
 import { Link } from "react-router-dom"
-import { useContext } from "react"
+import { useContext, useState } from "react"
 import { UserContext } from "../lib/UserContext"
 
 const NavBar = () => {
-	const { user } = useContext(UserContext)
+	const { user, setUser } = useContext(UserContext)
 
 	return (
 		<div className="w-full p-6">
@@ -12,7 +12,14 @@ const NavBar = () => {
 					<Link to="/">Restaurants</Link>
 				</h1>
 				{user ? (
-					<p>Hello {user.name}</p>
+					<button
+						className="bg-blue-500 hover:bg-blue-700 text-white py-2 px-4 rounded mr-3"
+						onClick={() => {
+							setUser({})
+						}}
+					>
+						Log Out
+					</button>
 				) : (
 					<div className="justify-end">
 						<Link to="/login">

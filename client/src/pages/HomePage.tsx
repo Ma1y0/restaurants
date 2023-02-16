@@ -1,7 +1,13 @@
-const HomePgae = () => (
-	<main>
-		<h1 className="p-6">Hello World</h1>
-	</main>
-)
+import { useContext } from "react"
+import { UserContext } from "../lib/UserContext"
+
+const HomePgae = () => {
+	const { auth } = useContext(UserContext)
+	return (
+		<main>
+			<p>Welcome {auth?.name}</p>
+		</main>
+	)
+}
 
 export default HomePgae

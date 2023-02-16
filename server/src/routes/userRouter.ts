@@ -122,7 +122,7 @@ router.post("/register", async (req, res) => {
 
         res.cookie('jwt', refreshToken, { httpOnly: true, secure: true, sameSite: 'none', maxAge: 24 * 60 * 60 * 1000 })
 
-        res.status(200).json({
+        res.status(201).json({
             message: "User has been sucesfully Registered",
             token
         })
