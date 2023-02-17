@@ -8,6 +8,8 @@ import Register from "./pages/Register"
 import { ToastContainer } from "react-toastify"
 import { UserContext } from "./lib/UserContext"
 import { useMemo, useState } from "react"
+import { ReactQueryDevtools } from "react-query/devtools"
+import RestaurantPage from "./pages/RestaurantPage"
 
 const queryClient = new QueryClient()
 
@@ -27,15 +29,13 @@ function App() {
 						<Route path="/" element={<HomePage />} />
 						<Route path="/login" element={<LogIn />} />
 						<Route path="/register" element={<Register />} />
+						<Route path="/restaurant/:id" element={<RestaurantPage />} />
 						<Route path="*" element={<E404 />} />
 					</Routes>
-					<ToastContainer
-						position="bottom-right"
-						theme="dark"
-						hideProgressBar={true}
-					/>
+					<ToastContainer position="bottom-right" theme="dark" hideProgressBar={true} />
 				</BrowserRouter>
 			</UserContext.Provider>
+			<ReactQueryDevtools initialIsOpen={false} />
 		</QueryClientProvider>
 	)
 }

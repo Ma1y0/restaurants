@@ -15,6 +15,23 @@ router.get("/", async (req, res) => {
     }
 })
 
+// Get restaurant by an id
+router.get("/:id", async (req, res) => {
+    const { id } = req.params
+
+    try {
+        const restaurant = await prisma.restaurant.findUnique({
+            where: {
+                id: id
+            }
+        })
+
+        res.status(200).json(restaurant)
+    } catch (error) {
+        res.status(500).json({ error })
+    }
+})
+
 // Create a restaurant
 router.post("/", async (req, res) => {
     const { name, ownerEmail } = req.body
@@ -34,7 +51,7 @@ router.post("/", async (req, res) => {
                 }
             }
         })
-    
+        
         res.status(201).json(restaurant)
     } catch (error) {
         res.status(500).json({ error })

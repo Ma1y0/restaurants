@@ -21,6 +21,8 @@ model User {
 model Restaurant {
   id      String   @unique @default(cuid())
   name    String
+  rating  Float?
+  bio     String?
   reviews Review[]
 
   owner  User   @relation("UserToRestaurant", fields: [userId], references: [id])
